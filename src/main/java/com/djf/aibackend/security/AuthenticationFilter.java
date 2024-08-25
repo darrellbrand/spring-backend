@@ -1,4 +1,4 @@
-package security;
+package com.djf.aibackend.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

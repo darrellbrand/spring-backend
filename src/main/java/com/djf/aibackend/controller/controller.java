@@ -1,4 +1,4 @@
-package controller;
+package com.djf.aibackend.controller;
 
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
