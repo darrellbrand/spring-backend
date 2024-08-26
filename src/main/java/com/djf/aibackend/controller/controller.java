@@ -14,7 +14,7 @@ import reactor.core.publisher.Flux;
 import java.util.Map;
 
 @RestController
-@RequestMapping("ai")
+@RequestMapping("/ai")
 public class controller {
 
     private final OpenAiChatModel chatModel;
