@@ -30,20 +30,33 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.securityMatcher("/ai/**").csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
-                        authorizationManagerRequestMatcherRegistry.requestMatchers("/ai/**").authenticated())
+                        authorizationManagerRequestMatcherRegistry.requestMatchers("/**").authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(httpSecuritySessionManagementConfigurer ->
                         httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterAfter(authenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
 
     @Order(1)
     @Bean
     SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
         return http.securityMatcher("/register/**").authorizeHttpRequests(auth -> {
-            auth.anyRequest().permitAll();
-        }).build();
+            auth.anyRequest().authenticated();
+        }).httpBasic(Customizer.withDefaults()).build();
     }
+    @Bean
+    @Order(3)
+    SecurityFilterChain h2ConsoleSecurityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .securityMatcher(AntPathRequestMatcher.antMatcher("/h2-console/**"))
+                .authorizeHttpRequests( auth -> {
+                    auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll();
+                })
+                .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")))
+                .headers(headers -> headers.frameOptions().disable())
+                .build();
+    }
+
 
     @Bean
     public InMemoryUserDetailsManager user() {
