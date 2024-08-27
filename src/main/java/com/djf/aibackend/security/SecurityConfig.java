@@ -30,7 +30,6 @@ public class SecurityConfig {
         return http.securityMatcher("/ai/**").csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry.requestMatchers("/**").authenticated())
-                .httpBasic(Customizer.withDefaults())
                 .sessionManagement(httpSecuritySessionManagementConfigurer ->
                         httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
@@ -39,7 +38,7 @@ public class SecurityConfig {
     @Order(1)
     @Bean
     SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
-        return http.securityMatcher("/register/**").authorizeHttpRequests(auth -> {
+        return http.securityMatcher("/register/**").csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> {
             auth.anyRequest().authenticated();
         }).httpBasic(Customizer.withDefaults()).build();
     }
