@@ -3,10 +3,7 @@ package com.djf.aibackend.security;
 import com.djf.aibackend.model.UserData;
 import com.djf.aibackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 public class ApiKeyService {
