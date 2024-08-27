@@ -51,6 +51,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         AntPathRequestMatcher matcher = new AntPathRequestMatcher("/register/**");
-        return matcher.matches(request);
+        AntPathRequestMatcher matcher2 = new AntPathRequestMatcher("/h2-console/**");
+        return matcher.matches(request) || matcher2.matches(request);
     }
 }
