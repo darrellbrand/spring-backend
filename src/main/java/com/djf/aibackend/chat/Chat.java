@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 
 
 public class Chat {
-    @Value("${api-key}")
+    @Value("${spring.ai.openai.api-key}")
     private String apiKey;
     @Bean
     public OpenAiChatModel chatModel() {

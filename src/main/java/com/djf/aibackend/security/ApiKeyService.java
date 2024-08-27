@@ -10,9 +10,6 @@ import java.util.Objects;
 
 @Service
 public class ApiKeyService {
-    @Value("${api-key-temp}")
-    private String apiKeyTemp;
-
     private final  UserRepository userRepository;
 
     @Autowired
