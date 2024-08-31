@@ -8,10 +8,7 @@ import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 import java.util.Map;
@@ -27,7 +24,7 @@ public class controller {
         this.chatModel = chatModel;
     }
 
-    @GetMapping("/generate")
+    @PostMapping("/generate")
     public ResponseEntity<GenerateResponse> generate(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
         GenerateResponse generateResponse = new GenerateResponse();
         generateResponse.setGenerate(chatModel.call(message));
